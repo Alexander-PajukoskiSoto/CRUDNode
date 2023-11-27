@@ -4,19 +4,11 @@ const http = require('http');
 const express = require('express');
 const { json } = require('body-parser');
 editChecker=false;
-addChecker= false;
-viewChecker = true;
-// const app = express();
-// const port = 3000;
+addChecker= true;
+viewChecker = false;
+deleteChecker = false;
 
-// const statusMessage ='all good, hehe';
-// app.get('/', (req, res) => {
-//     res.writeHead(200,[statusMessage]);
-// })
 
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`);
-// })
 
 /*  EDIT FILE
     EDIT FILE
@@ -37,8 +29,8 @@ viewChecker = true;
         const userList = JSON.parse(data);
 
         // replace from array
-        userList[1].fName='123123';
-        userList[1].lName='akjndkjad';
+        userList[1].fName='Mike';
+        userList[1].lName='Wazowski';
 
 
         // stringify
@@ -78,8 +70,8 @@ viewChecker = true;
 if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 
     // sample names
-    newFName = 'Dedan';
-    newLName = 'Doodan';
+    newFName = 'Lol';
+    newLName = 'Lollers';
 
     // parse get list B)
     userList = JSON.parse(data);
@@ -109,6 +101,15 @@ if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 // ADD NEW USER END 
 // ADD NEW USER END 
 // ADD NEW USER END 
+
+/* READ
+   READ
+   READ
+   READ
+   READ
+   READ
+   READ
+ */
 if(viewChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 
     if(err){
@@ -116,10 +117,53 @@ if(viewChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
     }
 
     // make list out of json
-    userList = JSON.parse(data);
+    let userList = JSON.parse(data);
 
     userList.forEach(item => {
         console.log(item.fName);
         console.log(item.lName);
     });
 })}
+/* READ END
+   READ END
+   READ END
+   READ END
+   READ END
+   READ END
+   READ END
+ */
+
+//DELETE 
+//DELETE 
+//DELETE 
+//DELETE 
+//DELETE 
+//DELETE 
+//DELETE 
+
+if(deleteChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
+
+    // users.json to array, hehe 
+    let userList = JSON.parse(data);
+    // delete specific array slot (will later be dynamic with link .get maybe idk)
+    userList.splice(1,1);
+    // back to string (json)
+    let stringUserList = JSON.stringify(userList);
+    // formatting
+    const stringUserSpace = stringUserList.replaceAll(',',',\n');
+    const formatedUserList = stringUserSpace.replaceAll('},','},\n\n');
+
+    // print to file
+    fs.writeFile('users.json', formatedUserList, function(){
+        // logs
+        console.log(formatedUserList);
+        });
+})};
+
+//DELETE END
+//DELETE END
+//DELETE END
+//DELETE END
+//DELETE END
+//DELETE END
+//DELETE END
