@@ -1,13 +1,38 @@
 const user = require('./users.json');
 const fs = require('fs');
 const http = require('http');
-const express = require('express');
+
 const { json } = require('body-parser');
+
+const express = require('express');
+const app = express();
+
 editChecker=false;
-addChecker= true;
+addChecker= false;
 viewChecker = false;
 deleteChecker = false;
 
+const serveIndex = require('serve-index');
+
+
+app.use((req, res, next) => {
+  console.log('Time: ', Date.now());
+  next();
+});
+
+app.use('/request-type', (req, res, next) => {
+    res.send('lolxd')
+  next();
+});
+
+app.use('/public', express.static('public'));
+app.use('/public', serveIndex('public'));
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname+"/index.html");
+});
+
+app.listen(3000, () => console.log('Example app is listening on port 3000.'));
 
 
 /*  EDIT FILE
