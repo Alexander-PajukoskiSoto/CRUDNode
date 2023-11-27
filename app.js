@@ -24,25 +24,39 @@ addChecker= false;
     EDIT FILE
     EDIT FILE
     EDIT FILE
-    EDIT FILE 
     EDIT FILE
     EDIT FILE
     EDIT FILE
-    EDIT FILE   
-    EDIT FILE*/ 
+    EDIT FILE
+    EDIT FILE
+    EDIT FILE*/
     if(editChecker==true){
         fs.readFile('users.json', 'utf8', function(err, data){
 
-        const userList = JSON.parse(data)
+        // parse, make array
+        const userList = JSON.parse(data);
 
-        const newValue = data.replace(user[5].fName, 'luigii');
-        
-        fs.writeFile('users.json', newValue, function(){
-        
-        console.log(newValue);
-        
+        // replace from array
+        userList[1].fName='123123';
+        userList[1].lName='akjndkjad';
+
+
+        // stringify
+        const newValueString = JSON.stringify(userList);
+
+        //Formatting
+        const stringUserSpace = newValueString.replaceAll(',',',\n')
+        const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
+
+
+        console.log(formatedUserList);
+
+        fs.writeFile('users.json', formatedUserList, function(){
+
+        // console.log(newValue);
+
         });
-        
+
         });}
 
 /*  EDIT FILE
@@ -51,12 +65,12 @@ addChecker= false;
     EDIT FILE
     EDIT FILE
     EDIT FILE
-    EDIT FILE 
     EDIT FILE
     EDIT FILE
     EDIT FILE
-    EDIT FILE   
-    EDIT FILE*/ 
+    EDIT FILE
+    EDIT FILE
+    EDIT FILE*/
 
 // ADD NEW USER
 // ADD NEW USER
@@ -73,7 +87,7 @@ if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
     // parse get list B)
     userList = JSON.parse(data);
 
-    // push sample data 
+    // push sample data
     userList.push({fName: newFName,lName: newLName});
 
     // makes string (json)
@@ -81,7 +95,7 @@ if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 
     // Formatting
     const stringUserSpace = stringUserList.replaceAll(',',',\n')
-    formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
+    const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
 
     // prints to users.json
     fs.writeFile('users.json', formatedUserList, function(){
@@ -89,7 +103,7 @@ if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
          console.log(formatedUserList);
 
          });
-    
+
 });
 }
 
