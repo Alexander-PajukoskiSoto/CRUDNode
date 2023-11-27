@@ -3,9 +3,9 @@ const fs = require('fs');
 const http = require('http');
 const express = require('express');
 const { json } = require('body-parser');
-editChecker=true;
+editChecker=false;
 addChecker= false;
-
+viewChecker = true;
 // const app = express();
 // const port = 3000;
 
@@ -59,18 +59,15 @@ addChecker= false;
 
         });}
 
-/*  EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE
-    EDIT FILE*/
+/*  EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END
+    EDIT FILE END*/
 
 // ADD NEW USER
 // ADD NEW USER
@@ -108,4 +105,16 @@ if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 }
 
 
+// ADD NEW USER END 
+// ADD NEW USER END 
+// ADD NEW USER END 
+// ADD NEW USER END 
+if(viewChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 
+    // make list out of json
+    userList = JSON.parse(data);
+
+    userList.forEach(item => {
+        console.log(item.lName);
+    });
+})}
