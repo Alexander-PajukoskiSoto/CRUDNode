@@ -111,10 +111,15 @@ if(addChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 // ADD NEW USER END 
 if(viewChecker==true){fs.readFile('users.json', 'utf8', function(err, data){
 
+    if(err){
+        console.log(err);
+    }
+
     // make list out of json
     userList = JSON.parse(data);
 
     userList.forEach(item => {
+        console.log(item.fName);
         console.log(item.lName);
     });
 })}
