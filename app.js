@@ -31,6 +31,13 @@ app.get('/show', (req, res) => {
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname+"/html/edit.html");
 });  
+app.get('/edit', (req, res) => {
+    res.sendFile(__dirname + '/html/editer.html');
+  
+    const query = url.parse(req.url, true).query;
+    selectedUser = users[query.user];
+    console.log(selectedUser);
+  });
 
 app.use('', (req, res) => {
     res.sendFile(__dirname+"/html/editer.html");
