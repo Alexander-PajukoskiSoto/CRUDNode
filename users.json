@@ -1,17 +1,33 @@
 [{"fName":"Giermo",
-"lName":"Soto"},
+"lName":"Soto",
+"uName":"GiermoGaming",
+"bDay":"2001-01-01",
+"pfp":"../images/GiermoGaming"},
 
 
 {"fName":"Lol",
-"lName":"Lollers"},
+"lName":"Lollers",
+"uName":"lolKing2913",
+"bDay":"2001-01-01",
+"pfp":"../images/lolking2913"},
 
 
 {"fName":"Lol",
-"lName":"Lollers"},
+"lName":"Lollers",
+"uName":"lolKing2913",
+"bDay":"2001-01-01",
+"pfp":"../images/lolking2913"
+},
 
 
 {"fName":"Lol",
-"lName":"Lollers"},
+"lName":"Lollers",
+"uName":"lolKing2913",
+"bDay":"2001-01-01",
+"pfp":"../images/lolking2913"},
 
 {"fName":"Lol",
-"lName":"Lollers"}]
+"lName":"Lollers",
+"uName":"lolKing2913",
+"bDay":"2001-01-01",
+"pfp":"../images/lolking2913"}]

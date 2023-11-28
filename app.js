@@ -11,10 +11,14 @@ const app = express();
 
 editChecker=false;
 addChecker= false;
-viewChecker = true;
+viewChecker = false;
 deleteChecker = false;
 
+
 const serveIndex = require('serve-index');
+
+app.use(express.static(__dirname));
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname+"/index.html");
 });
@@ -27,6 +31,12 @@ app.get('/show', (req, res) => {
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname+"/html/edit.html");
 });  
+users.forEach((item,index) => {
+    app.get(`/edit${index}`, (req, res) => {
+        res.sendFile(__dirname+"/html/index.html");
+    });  
+});
+
 
 // CREATE USER
 app.get('/create', (req, res) => {
