@@ -31,13 +31,10 @@ app.get('/show', (req, res) => {
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname+"/html/edit.html");
 });  
-users.forEach((item,index) => {
-    app.get(`/edit${index}`, (req, res) => {
-        res.sendFile(__dirname+"/html/index.html");
-    });  
-});
 
-
+app.use('', (req, res) => {
+    res.sendFile(__dirname+"/html/editer.html");
+});  
 // CREATE USER
 app.get('/create', (req, res) => {
     res.sendFile(__dirname+"/html/create.html");
