@@ -2,6 +2,8 @@ const user = require('./users.json');
 const fs = require('fs');
 const http = require('http');
 
+users = require('./users');
+
 const { json } = require('body-parser');
 
 const express = require('express');
@@ -9,28 +11,33 @@ const app = express();
 
 editChecker=false;
 addChecker= false;
-viewChecker = false;
+viewChecker = true;
 deleteChecker = false;
 
 const serveIndex = require('serve-index');
-
-
-app.use((req, res, next) => {
-  console.log('Time: ', Date.now());
-  next();
-});
-
-app.use('/request-type', (req, res, next) => {
-    res.send('lolxd')
-  next();
-});
-
-app.use('/public', express.static('public'));
-app.use('/public', serveIndex('public'));
-
 app.get('/', (req, res) => {
-  res.sendFile(__dirname+"/index.html");
+    res.sendFile(__dirname+"/index.html");
 });
+// SHOW USER 
+app.get('/show', (req, res) => {
+    res.sendFile(__dirname+"/html/show.html");
+  });
+
+// EDIT USER 
+app.get('/edit', (req, res) => {
+    res.sendFile(__dirname+"/html/edit.html");
+});  
+
+// CREATE USER
+app.get('/create', (req, res) => {
+    res.sendFile(__dirname+"/html/create.html");
+});
+
+
+
+app.get('/users',(req,res)=>{
+    res.json(users);
+   });
 
 app.listen(3000, () => console.log('Example app is listening on port 3000.'));
 

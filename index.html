@@ -1,4 +1,3 @@
-//index.html
 
 <!DOCTYPE html>
 <html>
@@ -7,24 +6,47 @@
  <title>Home page</title>
 </head>
 <body>
- <button>Get data</button>
+ <button id="getData">Get data</button>
+ <button id="hi">Get data</button>
+ <a href="./show">Show users</a>
+ <a href="./edit">Edit users</a>
+ <a href="./create">Create users</a>
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
- 
+
   <script type="text/javascript">
   
-    const btn = document.querySelector('button');
+    const btn = document.querySelector('#getData');
+    const hi = document.querySelector('#hi');
     btn.addEventListener('click',getData);
+    hi.addEventListener('click',logHi);
     function getData(e){
         $.ajax({
-        url : '/users.json',
+        url : '/users',
         method : 'GET',
         success : function(data){
            console.log(data);
+           
         },
       
         error: function(err){
           console.log('Failed');
         }
+        
+   });
+  } 
+  function logHi(e){
+        $.ajax({
+        url : '/users',
+        method : 'GET',
+        success : function(data){
+           console.log('hi');
+        },
+      
+        error: function(err){
+          console.log('Failed');
+        }
+        
    });
   } 
  </script>
