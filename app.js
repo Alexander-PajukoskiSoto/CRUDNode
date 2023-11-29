@@ -1,7 +1,6 @@
 const user = require('./users.json');
 const fs = require('fs');
 const http = require('http');
-users = require('./users');
 const multer = require("multer");
 let upload = multer({ dest: "uploads/" });
 
@@ -24,13 +23,19 @@ viewChecker = false;
 deleteChecker = false;
 
 
+const data = fs.readFileSync('users.json', 'utf8');
+const users = JSON.parse(data);
+
 const serveIndex = require('serve-index');
+const { url } = require('inspector');
 
 app.use(express.static(__dirname));
 
 app.use(express.json());
 
-app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:true}));
+
+app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
@@ -42,11 +47,11 @@ app.get('/show', (req, res) => {
   });
 // CREATE USER
 app.get('/create', (req, res) => {
-    res.sendFile(__dirname+"/html/create.html");
+    res.sendFile(__dirname+"./html/create.html");
 });
 app.post('/create',(req,res)=>{
+    console.log(req.body,'hhehe');
 
-    fs.readFile('users.json', 'utf8', function(err, data){
 
         // sample names
         newFName = req.body.fName;
@@ -54,14 +59,12 @@ app.post('/create',(req,res)=>{
         newUName = req.body.uName;
         newBDay = req.body.bDay;
 
-        // parse get list B)
-        userList = JSON.parse(data);
         
         // push sample data
-        userList.push({fName: newFName,lName: newLName, uName: newUName, bDay: newBDay});
+        users.push({fName: newFName,lName: newLName, uName: newUName, bDay: newBDay});
 
         // makes string (json)
-        const stringUserList =JSON.stringify(userList);
+        const stringUserList =JSON.stringify(users);
 
         // Formatting
         const stringUserSpace = stringUserList.replaceAll(',',',\n')
@@ -75,10 +78,8 @@ app.post('/create',(req,res)=>{
         });
         res.sendFile(__dirname+"/html/create.html")
     
-    });
 
 
-    console.log(req.body,'hhehe');
   
 })
 // EDIT USER 
