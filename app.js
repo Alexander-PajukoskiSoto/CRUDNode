@@ -2,7 +2,8 @@ const user = require('./users.json');
 const fs = require('fs');
 const http = require('http');
 users = require('./users');
-const upload = require('multer')
+const multer = require("multer");
+let upload = multer({ dest: "uploads/" });
 
 
 const bodyParser = require('body-parser');
@@ -27,6 +28,11 @@ const serveIndex = require('serve-index');
 
 app.use(express.static(__dirname));
 
+app.use(express.json());
+
+app.use(express.urlencoded({extended:true}));
+
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname+"/index.html");
 });
@@ -39,42 +45,40 @@ app.get('/create', (req, res) => {
     res.sendFile(__dirname+"/html/create.html");
 });
 app.post('/create',(req,res)=>{
-    new Promise((err, res)=>{
-        if(err){
-            console.log(err)
-        }
-        else{
-            fs.readFile('users.json', 'utf8', function(err, data){
 
-                // sample names
-                newFName = req.body.fName;
-                newLName = req.body.lName;
+    fs.readFile('users.json', 'utf8', function(err, data){
+
+        // sample names
+        newFName = req.body.fName;
+        newLName = req.body.lName;
+        newUName = req.body.uName;
+        newBDay = req.body.bDay;
+
+        // parse get list B)
+        userList = JSON.parse(data);
         
-                // parse get list B)
-                userList = JSON.parse(data);
-        
-                // push sample data
-                userList.push({fName: newFName,lName: newLName});
-        
-                // makes string (json)
-                const stringUserList =JSON.stringify(userList);
-        
-                // Formatting
-                const stringUserSpace = stringUserList.replaceAll(',',',\n')
-                const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
-        
-                // prints to users.json
-                fs.writeFile('users.json', formatedUserList, function(){
-        
-                console.log(formatedUserList);
-        
-                });
-                res.sendFile(__dirname+"/html/create.html")
-            
-            });
-        }
-    })
-    console.log(req.body);
+        // push sample data
+        userList.push({fName: newFName,lName: newLName, uName: newUName, bDay: newBDay});
+
+        // makes string (json)
+        const stringUserList =JSON.stringify(userList);
+
+        // Formatting
+        const stringUserSpace = stringUserList.replaceAll(',',',\n')
+        const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
+
+        // prints to users.json
+        fs.writeFile('users.json', formatedUserList, function(){
+
+        console.log(formatedUserList);
+
+        });
+        res.sendFile(__dirname+"/html/create.html")
+    
+    });
+
+
+    console.log(req.body,'hhehe');
   
 })
 // EDIT USER 
@@ -134,7 +138,6 @@ app.listen(3030, () => console.log('Example app is listening on port 3030.'));
 
         fs.writeFile('users.json', formatedUserList, function(){
 
-            console.log(newValue);
 
         });
 
