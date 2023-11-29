@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
+    <title>Create User</title>
     <link rel="stylesheet" href="./css/create.css">
 </head>
-<form action=""method="POST">
-    
+<form action="/create" method="POST" enctype="multipart/form-data">
+    <input type="text" name="fName" id="fName">
+    <input type="text" name="lName" id="lName">
+    <input type="text" name="uName" id="uName">
+    <input type="date" name="bDay" id="bDay">
+    <input type="submit">
 </form>
 <body>
     <div id="mainDiv"></div>

@@ -1,13 +1,21 @@
 const user = require('./users.json');
 const fs = require('fs');
 const http = require('http');
-
 users = require('./users');
+const upload = require('multer')
 
-const { json } = require('body-parser');
+
+const bodyParser = require('body-parser');
 
 const express = require('express');
 const app = express();
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+// parse application/json
+app.use(bodyParser.json())
 
 editChecker=false;
 addChecker= false;
@@ -30,11 +38,49 @@ app.get('/show', (req, res) => {
 app.get('/create', (req, res) => {
     res.sendFile(__dirname+"/html/create.html");
 });
+app.post('/create',(req,res)=>{
+    new Promise((err, res)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            fs.readFile('users.json', 'utf8', function(err, data){
 
+                // sample names
+                newFName = req.body.fName;
+                newLName = req.body.lName;
+        
+                // parse get list B)
+                userList = JSON.parse(data);
+        
+                // push sample data
+                userList.push({fName: newFName,lName: newLName});
+        
+                // makes string (json)
+                const stringUserList =JSON.stringify(userList);
+        
+                // Formatting
+                const stringUserSpace = stringUserList.replaceAll(',',',\n')
+                const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
+        
+                // prints to users.json
+                fs.writeFile('users.json', formatedUserList, function(){
+        
+                console.log(formatedUserList);
+        
+                });
+                res.sendFile(__dirname+"/html/create.html")
+            
+            });
+        }
+    })
+    console.log(req.body);
+  
+})
 // EDIT USER 
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname+"/html/edit.html");
-});  
+});
 
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname + '/html/editer.html');
@@ -50,7 +96,7 @@ app.get('/users',(req,res)=>{
     res.json(users);
    });
 
-app.listen(3000, () => console.log('Example app is listening on port 3000.'));
+app.listen(3030, () => console.log('Example app is listening on port 3030.'));
 
 
 /*  EDIT FILE
@@ -88,7 +134,7 @@ app.listen(3000, () => console.log('Example app is listening on port 3000.'));
 
         fs.writeFile('users.json', formatedUserList, function(){
 
-        // console.log(newValue);
+            console.log(newValue);
 
         });
 
