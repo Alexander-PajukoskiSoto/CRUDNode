@@ -26,11 +26,16 @@ app.get('/', (req, res) => {
 app.get('/show', (req, res) => {
     res.sendFile(__dirname+"/html/show.html");
   });
+// CREATE USER
+app.get('/create', (req, res) => {
+    res.sendFile(__dirname+"/html/create.html");
+});
 
 // EDIT USER 
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname+"/html/edit.html");
 });  
+
 app.get('/edit', (req, res) => {
     res.sendFile(__dirname + '/html/editer.html');
   
@@ -38,14 +43,6 @@ app.get('/edit', (req, res) => {
     selectedUser = users[query.user];
     console.log(selectedUser);
   });
-
-app.use('', (req, res) => {
-    res.sendFile(__dirname+"/html/editer.html");
-});  
-// CREATE USER
-app.get('/create', (req, res) => {
-    res.sendFile(__dirname+"/html/create.html");
-});
 
 
 
