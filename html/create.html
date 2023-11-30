@@ -9,22 +9,30 @@
 </head>
 
 <body>
-    <form action="" id="loginForm">
-        <h1>Login</h1>
-        <input type="text" id="fName" placeholder="Enter your Username...">
-        <input type="text" id="lName" placeholder="Enter your Password...">
+    <form action="" id="userForm">
+        <h1>Create User</h1>
+        <input type="text" id="fName" placeholder="First Name">
+        <input type="text" id="lName" placeholder="Last Name">
+        <input type="text" id="uName" placeholder="Username">
+        <label for="bDay">Birthday:</label>
+        <input type="date" id="bDay">
         <button type="submit">Submit</button>
       </form>
         <script>
-            let form = document.getElementById('loginForm');
+            
+            let form = document.getElementById('userForm');
             form.addEventListener("submit", async(event)=>{
                 event.preventDefault();
                 let fName = document.getElementById('fName');
                 let lName = document.getElementById('lName');
-              
+                let uName = document.getElementById('uName');
+                let bDay = document.getElementById('bDay');
+
                 const data= {
                     "fName":fName.value,
-                    "lName":lName.value
+                    "lName":lName.value,
+                    "uName":uName.value,
+                    "bDay":bDay.value
                 }
 
                 await fetch("http://localhost:3000/create",{
@@ -36,13 +44,21 @@
                     body:JSON.stringify(data)
                 }).then((res)=>{
                     console.log(`response from server: ${res}`)
+                    return fetch("../users.json")
+                    .then(response => response.json())
+                    .then(response => {
+                        response.push(
+                            response.push(response[0])
+                        )
+                        console.log(response)
+                })
+                .catch(error => console.log(error));
+
                 }).catch((err)=>{
                     console.log(`Error in fetch function: ${err}`)
                 })
             })
-
-
-
-
+            fetch('../users.json')
+                
         </script>
 </body>
