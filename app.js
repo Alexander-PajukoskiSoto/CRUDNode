@@ -1,93 +1,86 @@
-// const user = require('./users.json');
-// const fs = require('fs');
-// const http = require('http');
-// const multer = require("multer");
-// let upload = multer({ dest: "uploads/" });
-const cors = require('cors')
-const bodyParser = require('body-parser');
-const express = require('express');
-const app = express();
-app.use(bodyParser.json())
-app.use(cors());
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-    extended: false
-  }));
-  app.use(express.json());
-// editChecker=false;
-// addChecker= false;
-// viewChecker = false;
-// deleteChecker = false;
+    const user = require('./users.json');
+    const fs = require('fs');
+    const http = require('http');
+    const multer = require("multer");
+    let upload = multer({ dest: "uploads/" });
+    const cors = require('cors')
+    const bodyParser = require('body-parser');
+    const express = require('express');
+    const app = express();
+    app.use(bodyParser.json())
+    app.use(cors());
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    app.use(express.json());
+    // editChecker=false;
+    // addChecker= false;
+    // viewChecker = false;
+    // deleteChecker = false;
+    let selectedUser = undefined;
+
+    const data = fs.readFileSync('users.json', 'utf8');
+    const users = JSON.parse(data);
+
+    const serveIndex = require('serve-index');
+    const { url } = require('inspector');
 
 
-// const data = fs.readFileSync('users.json', 'utf8');
-// const users = JSON.parse(data);
-
-// const serveIndex = require('serve-index');
-// const { url } = require('inspector');
+    app.use(express.static(__dirname));
 
 
-// app.use(express.static(__dirname));
+        app.get('/', (req, res) => {
+        res.sendFile(__dirname+"/index.html");
+    });
+    // SHOW USER 
+    app.get('/show', (req, res) => {
+        res.sendFile(__dirname+"/html/show.html");
+    });
+    // CREATE USER
+    app.get('/create', (req, res) => {
+        res.sendFile(__dirname+"/html/create.html");
+    });
+    app.post('/create',(req,res)=>{
+            // push sample data
+            users.push({fName: req.body.fName,lName: req.body.lName, uName: req.body.uName, bDay: req.body.bDay});
 
+            //  makes string (json)
+            const stringUserList =JSON.stringify(users);
 
+            // Formatting
+            const stringUserSpace = stringUserList.replaceAll(',',',\n')
+            const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
 
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname+"/index.html");
-// });
-// // SHOW USER 
-// app.get('/show', (req, res) => {
-//     res.sendFile(__dirname+"/html/show.html");
-//   });
-// CREATE USER
-// app.get('/create', (req, res) => {
-//     res.sendFile(__dirname+"/html/create.html");
-// });
-app.post('/create',(req,res)=>{
-        // sample names
-        // newFName = req.body.fName;
-        // newLName = req.body.lName;
-        // newUName = req.body.uName;
-        // newBDay = req.body.bDay;
-        console.debug(` Got request from Frontend: \n\n ${JSON.stringify(req.body)}`)
-        // push sample data
-       // users.push({fName: newFName,lName: newLName, uName: newUName, bDay: newBDay});
+            // prints to users.json
+            fs.writeFile('users.json', formatedUserList, function(){
 
-        // makes string (json)
-        // const stringUserList =JSON.stringify(users);
+            // console.log(formatedUserList);
 
-        // // Formatting
-        // const stringUserSpace = stringUserList.replaceAll(',',',\n')
-        // const formatedUserList = stringUserSpace.replaceAll('},','},\n\n')
+            });
+            res.sendFile(__dirname+"/html/create.html")
+        
+    })
+    // EDIT USER 
+    app.get('/edit', (req, res) => {
+        res.sendFile(__dirname+"/html/edit.html");
+    });
 
-        // // prints to users.json
-        // fs.writeFile('users.json', formatedUserList, function(){
+    app.get('/edit', (req, res) => {
+        res.sendFile(__dirname + '/html/editer.html');
 
-        // // console.log(formatedUserList);
-
-        // });
-        // res.sendFile(__dirname+"/html/create.html")
-    
-})
-// EDIT USER 
-// app.get('/edit', (req, res) => {
-//     res.sendFile(__dirname+"/html/edit.html");
-// });
-
-// app.get('/edit', (req, res) => {
-//     res.sendFile(__dirname + '/html/editer.html');
-  
-//     const query = url.parse(req.url, true).query;
-//     selectedUser = users[query.user];
-//     console.log(selectedUser);
-//   });
+        const query = url.parse(req.url, true).query;
+        selectedUser = users[query.user];
+        console.log(selectedUser);
+    });
 
 
 
-// app.get('/users',(req,res)=>{
-//     res.json(users);
-//    });
+    app.get('/users',(req,res)=>{
+        res.json(users);
+        });
 
-app.listen(3000, () => console.log('Example app is listening on port 3000.'));
+    app.listen(3000, () => console.log('Example app is listening on port 3000.'));
 
 
 /*  EDIT FILE

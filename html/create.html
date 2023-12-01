@@ -9,16 +9,16 @@
 </head>
 
 <body>
-    <form action="" id="userForm">
+    <form action="/create" method="post" id="userForm">
         <h1>Create User</h1>
-        <input type="text" id="fName" placeholder="First Name">
-        <input type="text" id="lName" placeholder="Last Name">
-        <input type="text" id="uName" placeholder="Username">
+        <input type="text" id="fName" name="fName" placeholder="First Name">
+        <input type="text" id="lName" name="lName" placeholder="Last Name">
+        <input type="text" id="uName" name="uName" placeholder="Username">
         <label for="bDay">Birthday:</label>
-        <input type="date" id="bDay">
+        <input type="date" id="bDay" name="bDay">
         <button type="submit">Submit</button>
       </form>
-        <script>
+        <!-- <script>
             
             let form = document.getElementById('userForm');
             form.addEventListener("submit", async(event)=>{
@@ -27,7 +27,7 @@
                 let lName = document.getElementById('lName');
                 let uName = document.getElementById('uName');
                 let bDay = document.getElementById('bDay');
-
+              
                 const data= {
                     "fName":fName.value,
                     "lName":lName.value,
@@ -44,21 +44,17 @@
                     body:JSON.stringify(data)
                 }).then((res)=>{
                     console.log(`response from server: ${res}`)
-                    return fetch("../users.json")
-                    .then(response => response.json())
-                    .then(response => {
-                        response.push(
-                            response.push(response[0])
-                        )
-                        console.log(response)
-                })
-                .catch(error => console.log(error));
+                    
 
                 }).catch((err)=>{
                     console.log(`Error in fetch function: ${err}`)
                 })
             })
             fetch('../users.json')
-                
-        </script>
+                .then(response => response.json())
+                .then(jFile => {
+                    console.log(jFile)
+                })
+                .catch(error => console.log(error));
+        </script> -->
 </body>
