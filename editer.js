@@ -1,8 +1,12 @@
 const mainDiv = document.getElementById('mainDiv');
+const firstNameInp = document.getElementById('fName');
+const lastNameInp = document.getElementById('lName');
+const uNameInp = document.getElementById('uName');
+const bDayInp = document.getElementById('bDay');
 
 
 
-let users = fetch('./users.json')
+let users = fetch('../users.json')
     .then((response) => response.json())
     .then((json) =>{
         let urll = window.location.href;
@@ -11,21 +15,16 @@ let users = fetch('./users.json')
 
         console.log(editUrll);
 
-
+        //Elements
         const userDiv = document.createElement('div');
-        const editBtn = document.createElement('a');
-
-        //Textnodes
-        const userDivContent = document.createTextNode(json[editUrll].fName + ' ' + json[editUrll].lName + ' ' + json[editUrll].uName + ' ' + json[editUrll].bDay);
 
         // appends
-        userDiv.append(userDivContent,editBtn);
-        mainDiv.appendChild(userDiv);
-        editBtn.appendChild(editContent);
 
-        //attributes
-        editBtn.setAttribute('href',`edit${index}`);
-        editBtn.setAttribute('id',`user${index}`);
+        firstNameInp.value=json[editUrll].fName;
+        lastNameInp.value=json[editUrll].lName;
+        uNameInp.value=json[editUrll].uName;
+        bDayInp.value=json[editUrll].bDay;
+
     })
 
 

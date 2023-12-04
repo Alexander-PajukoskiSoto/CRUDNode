@@ -16,7 +16,7 @@ let users = fetch('./users.json')
         editBtn.appendChild(editContent);
 
         //attributes
-        editBtn.setAttribute('href',`edit${index}`);
+        editBtn.setAttribute('href',`edit/${index}`);
         editBtn.setAttribute('id',`user${index}`);
     }));
 

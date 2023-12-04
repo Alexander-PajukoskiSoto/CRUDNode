@@ -6,6 +6,10 @@
     const cors = require('cors')
     const bodyParser = require('body-parser');
     const express = require('express');
+    const serveIndex = require('serve-index');
+    const url= require('url')
+
+
     const app = express();
     app.use(bodyParser.json())
     app.use(cors());
@@ -23,8 +27,7 @@
     const data = fs.readFileSync('users.json', 'utf8');
     const users = JSON.parse(data);
 
-    const serveIndex = require('serve-index');
-    const { url } = require('inspector');
+ 
 
 
     app.use(express.static(__dirname));
@@ -55,9 +58,9 @@
             // prints to users.json
             fs.writeFile('users.json', formatedUserList, function(){
 
-            // console.log(formatedUserList);
 
             });
+            // redirects back so no infinite load
             res.sendFile(__dirname+"/html/create.html")
         
     })
@@ -65,14 +68,17 @@
     app.get('/edit', (req, res) => {
         res.sendFile(__dirname+"/html/edit.html");
     });
-
-    app.get('/edit', (req, res) => {
-        res.sendFile(__dirname + '/html/editer.html');
-
-        const query = url.parse(req.url, true).query;
-        selectedUser = users[query.user];
-        console.log(selectedUser);
+    //SPECIFIC USER EDIT
+    users.forEach((item, index) => {
+        app.get(`/edit/${index}`, (req, res) => {
+            res.sendFile(__dirname + '/html/editer.html');
+    
+            const query = url.parse(req.url, true).query;
+            selectedUser = users[query.user];
+            console.log(selectedUser);
+        });
     });
+    
 
 
 

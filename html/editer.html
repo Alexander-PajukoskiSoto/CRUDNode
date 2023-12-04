@@ -5,13 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User</title>
     <link rel="stylesheet" href="./css/edit.css">
-</head>
-<form action=""method="POST">
-    
-</form>
-<body>
-    <div id="mainDiv"></div>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="../editer.js" type="text/javascript"></script>
+    <script src="../editer.js" type="text/javascript" defer></script>
 
+</head>
+    
+<body>
+    <div id="mainDiv">
+        <form action="/edit" method="post" id="editForm">
+            <h1>Create User</h1>
+            <input type="text" id="fName" name="fName" placeholder="First Name">
+            <input type="text" id="lName" name="lName" placeholder="Last Name">
+            <input type="text" id="uName" name="uName" placeholder="Username">
+            <label for="bDay">Birthday:</label>
+            <input type="date" id="bDay" name="bDay">
+            <button type="submit">Submit</button>
+          </form>
+    </div>
 </body>
